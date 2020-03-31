@@ -2,6 +2,11 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const users = require('./users')
+const propositions = require('./propositions')
+const tags = require('./tags');
+const answers = require('./answers');
+const ObjectID = require('mongodb').ObjectID
+
 const port = 3000
 
 const logInfo = (req, res, next) => {
@@ -12,12 +17,11 @@ const logInfo = (req, res, next) => {
 app.use(cors())
 app.use(express.json())
 app.use(logInfo)
-app.use('/users',users)
-app.listen(port, () => console.log(`App listening on port ${port}`))
+app.use('/users', users)
+app.use('/propositions', propositions)
+app.use('/answers', answers)
+app.use('/tags', tags)
 
-const db = {
-    users : [
-        { id : 1, pseudo : 'michel', mdp : 'michelmdp', mail : 'michel@gmail.com' },
-        { id : 2, pseudo : 'lucas', mdp : 'lucasmdp', mail : 'lucas@gmail.com' }
-    ]
-}
+app.get('/id', (req, res) => res.json({id: ObjectID()}))
+
+app.listen(port, () => console.log(`MoTee API listening on port ${port}`))
