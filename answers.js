@@ -3,6 +3,7 @@ const ObjectID = require('mongodb').ObjectID
 
 router.get('/', (req, res) => {res.status(200).json(answers)});
 router.post('/', (req,res) => {
+    console.log(req.body)
     const id = ObjectID();
     const { content, owner, isAnon } = req.body
     answers = {
